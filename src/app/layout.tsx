@@ -1,7 +1,10 @@
-import "./globals.css";
+import "./globals.scss";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navigation from "@/components/Navigation";
+import ToastProvider from "@/components/ToastProvider";
+import Providers from "@/redux/provider";
+import QueryProvider from "@/react-query/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,13 +17,18 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-  login: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navigation />
-        <main>{children}</main>
+        <Providers>
+          <ToastProvider>
+            <Navigation />
+            <main className="max-w-5xl mx-auto">
+              <QueryProvider>{children}</QueryProvider>
+            </main>
+          </ToastProvider>
+        </Providers>
       </body>
     </html>
   );
